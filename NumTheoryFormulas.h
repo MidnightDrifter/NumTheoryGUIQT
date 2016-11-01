@@ -47,7 +47,7 @@ public:
 
     // SUPERLONG ModExponent(BIG base, BIG exp, BIG mod) { return ModExponent(SUPERLONG(base), SUPERLONG(exp), SUPERLONG(mod)); }
     // FAILPAIR MultInverse(BIG a, BIG b) { return MultInverse(SUPERLONG(a), SUPERLONG(b)); }
-    //// SUPERLONG CRT()
+    // SUPERLONG CRT()
     // SUPERLONG GCD(BIG a, BIG b) {return GCD(SUPERLONG(a), SUPERLONG(b)); }
     //
 
