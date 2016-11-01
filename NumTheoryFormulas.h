@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <InfInt.h>
+#include <fstream>
+#include <iostream>
 //#include <experimental>
 //#include <bigInt.h>
 class NumTheoryFormulas
@@ -29,6 +31,15 @@ public:
      SUPERLONG encrypt(SUPERLONG msg, SUPERLONG exp, SUPERLONG n) { return ModExponent(msg, exp, n); }
      SUPERLONG decrypt(SUPERLONG msg, SUPERLONG exp, SUPERLONG p, SUPERLONG q);
      SUPERLONG exitOnFailure(FAILPAIR f);
+     SUPERLONG order(SUPERLONG a, SUPERLONG base);
+     std::vector<SUPERLONG> factorize(SUPERLONG a);
+
+     void printFactors(std::vector<SUPERLONG> a);
+     void printFactors(SUPERLONG a);
+
+     SUPERLONG discreteLogBruteForce(SUPERLONG pRoot, SUPERLONG val, SUPERLONG mod);
+
+     SUPERLONG discreteLogBabyStepGiantStep(SUPERLONG pRoot, SUPERLONG val, SUPERLONG mod);
     //SUPERLONG encrypt(const char* msg, BIG exp, BIG p, BIG q) { return encrypt(SUPERLONG(msg), SUPERLONG(exp), SUPERLONG(p), SUPERLONG(q)); }
     // FAILPAIR decrypt(const char* msg, BIG exp, BIG p, BIG q) { return decrypt(SUPERLONG(msg), SUPERLONG(exp), SUPERLONG(p), SUPERLONG(q)); }
 

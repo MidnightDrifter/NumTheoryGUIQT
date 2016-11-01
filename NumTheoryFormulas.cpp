@@ -101,8 +101,21 @@ std::vector<std::vector<NumTheoryFormulas::SUPERLONG>> NumTheoryFormulas::Euclid
     output.at(output.size()-1).push_back(gcd);
 
 //Print output here
-   // std::string out = "A   Q   B   R   GCD\n";
 
+    printf("A   Q   B   R   GCD\n");
+
+    for (auto i = output.begin(); i != output.end(); i++)
+    {
+        if (i != output.end() - 2)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                printf("%li", (*i).at(j));
+                printf("%s", "   ");
+            }
+            printf("\n");
+        }
+    }
 
     return output;
 
@@ -137,10 +150,10 @@ NumTheoryFormulas::SUPERLONG b = base % mod;
         {
             //m *= (b%mod);
             m = (m*b)%mod;
-           // testM = m.toLongLong();
-           // testB = b.toLongLong();
-           // testE = e.toLongLong();
-            //int qqq = 1;
+            testM = m.toLongLong();
+            testB = b.toLongLong();
+            testE = e.toLongLong();
+            int qqq = 1;
 
         }
 
@@ -151,16 +164,16 @@ NumTheoryFormulas::SUPERLONG b = base % mod;
         //b %= mod;
         //b *= (b%mod);
     }
-  //  long long test = m.toLongLong();
+    long long test = m.toLongLong();
     return m;
 }
 
 NumTheoryFormulas::SUPERLONG NumTheoryFormulas::MultInverse(NumTheoryFormulas::SUPERLONG a, NumTheoryFormulas::SUPERLONG mod)
 {
     NumTheoryFormulas::SUPERLONG xCoef = a%mod;
-    //long long at = a.toLongLong();
-    //long long te = xCoef.toLongLong();
-   // long long modt = mod.toLongLong();
+    long long at = a.toLongLong();
+    long long te = xCoef.toLongLong();
+    long long modt = mod.toLongLong();
     //long myB= b%mod;
     NumTheoryFormulas::SUPERLONG myMod = mod;
     if (GCD(xCoef, myMod) > 1)
@@ -292,7 +305,7 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::MultInverse(NumTheoryFormulas::S
     {
         next[1] += mod;
     }
-    //long long l = next[1].toLongLong();
+    long long l = next[1].toLongLong();
     return exitOnFailure(std::pair<NumTheoryFormulas::SUPERLONG,bool>(next[1],true));
     /*if (b % gcd == 0)
     {
@@ -312,8 +325,8 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::MultInverse(NumTheoryFormulas::S
 NumTheoryFormulas::SUPERLONG NumTheoryFormulas::CRT( int numEqns, NumTheoryFormulas::SUPERLONG eqns[][2])
 {
     NumTheoryFormulas::SUPERLONG bigM = eqns[0][1];
-    //long long bM = bigM.toLongLong();
-    //long long te = eqns[1][1].toLongLong();
+    long long bM = bigM.toLongLong();
+    long long te = eqns[1][1].toLongLong();
     NumTheoryFormulas::SUPERLONG gcd = this->GCD(bigM, eqns[1][1]);
     bigM = bigM* eqns[1][1];
     for (int i = 2; i < numEqns; i++)
@@ -338,7 +351,7 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::CRT( int numEqns, NumTheoryFormu
         bigM =  bigM* eqns[i][1];
 
     }
-   // bM = bigM.toLongLong();
+    bM = bigM.toLongLong();
     NumTheoryFormulas::SUPERLONG out = 0;
     NumTheoryFormulas::SUPERLONG mTemp;
     for (int i = 0; i < numEqns; i++)
@@ -356,15 +369,15 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::GCD(NumTheoryFormulas::SUPERLONG
     NumTheoryFormulas::SUPERLONG a1(a);
     NumTheoryFormulas::SUPERLONG b1(b);
 
-  //  long long ta = a.toLongLong();
-    //long long tb = b.toLongLong();
+    long long ta = a.toLongLong();
+    long long tb = b.toLongLong();
 
         while (b1 != 0) {
             NumTheoryFormulas::SUPERLONG r = a1 % b1;
             a1 = b1;
             b1 = r;
         }
-        //long long t = a1.toLongLong();
+        long long t = a1.toLongLong();
         return a1;
 
 }
@@ -384,9 +397,9 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::decrypt(NumTheoryFormulas::SUPER
         NumTheoryFormulas::SUPERLONG msgCopy = msg;
         NumTheoryFormulas::SUPERLONG eCopy = exp;
         NumTheoryFormulas::SUPERLONG phiN = (p - 1)*(q - 1);
-      //  long long phi = phiN.toLongLong();
+        long long phi = phiN.toLongLong();
         NumTheoryFormulas::SUPERLONG bigN( p*q);
-        //long long N = bigN.toLongLong();
+        long long N = bigN.toLongLong();
         NumTheoryFormulas::SUPERLONG d = MultInverse(eCopy, phiN);
         //std::cout << d << std::endl;
         return exitOnFailure(FAILPAIR(ModExponent(msgCopy, (d), bigN), true));
@@ -416,6 +429,122 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::exitOnFailure(NumTheoryFormulas:
     }
 }
 
+NumTheoryFormulas::SUPERLONG NumTheoryFormulas::order(NumTheoryFormulas::SUPERLONG a, NumTheoryFormulas::SUPERLONG base)
+{
+    if (GCD(a, base) != 1)
+    {
+        return exitOnFailure(FAILPAIR(-1, false));
+    }
+
+    NumTheoryFormulas::SUPERLONG holder, out;
+    for (NumTheoryFormulas::SUPERLONG i = 1; i <= base; i++)
+    {
+        holder = ModExponent(i, 1, base);
+        if (holder == 0 && (out = ModExponent(a,i,base))==0)
+        {
+            return out;
+        }
+    }
+}
+
+
+std::vector<NumTheoryFormulas::SUPERLONG> NumTheoryFormulas::factorize(NumTheoryFormulas::SUPERLONG a)
+{
+    std::vector<SUPERLONG> out;
+    SUPERLONG temp;
+    for (SUPERLONG i = 1; i <= a; i++)
+    {
+        temp = ModExponent(i, 1, a);
+        if (temp == 0)
+        {
+            out.push_back(i);
+        }
+    }
+
+    return out;
+
+}
+
+void NumTheoryFormulas::printFactors(std::vector<NumTheoryFormulas::SUPERLONG> a)
+{
+    std::ofstream out;
+    std::string filename("Factorization");
+    //filename += a.toString();
+    out.open(filename);
+    int k = 0;
+    for (auto i = a.begin(); i != a.end(); i++)
+    {
+        if(k==5)
+        {
+            k = 0;
+            std::cout << std::endl;
+            out << std::endl;
+        }
+
+        std::cout << i->toString() << "\t";
+        out << i->toString() << "\t";
+        k++;
+
+    }
+    out.close();
+}
+
+void NumTheoryFormulas::printFactors(NumTheoryFormulas::SUPERLONG a)
+{
+    printFactors(factorize(a));
+}
+
+NumTheoryFormulas::SUPERLONG NumTheoryFormulas::discreteLogBruteForce(NumTheoryFormulas::SUPERLONG pRoot, NumTheoryFormulas::SUPERLONG val, NumTheoryFormulas::SUPERLONG mod)
+{
+    SUPERLONG out = -1;
+    for (SUPERLONG i = 1; i <= mod; i++)
+    {
+        if(val==ModExponent(pRoot,i,mod))
+        {
+            return i;
+        }
+    }
+
+}
+
+
+NumTheoryFormulas::SUPERLONG NumTheoryFormulas::discreteLogBabyStepGiantStep(NumTheoryFormulas::SUPERLONG pRoot, NumTheoryFormulas::SUPERLONG val, NumTheoryFormulas::SUPERLONG mod)
+{
+    std::vector<SUPERLONG> small, big;
+
+    SUPERLONG bigN = (mod - 1).intSqrt();
+    SUPERLONG temp, inv;
+    for (SUPERLONG i = 1; i <= bigN; i++)
+    {
+        small.push_back(ModExponent(pRoot, i, mod));
+        temp = pRoot;
+        for (SUPERLONG j = 1; j < bigN; j++)
+        {
+            temp *= pRoot;
+        }
+        temp *= (bigN+1);
+        inv = MultInverse(temp, mod);
+        inv *= val;
+
+
+        big.push_back(ModExponent(inv, 1, mod));
+        small.push_back(ModExponent(pRoot, i, mod));
+    }
+
+    for(SUPERLONG i=0;i<=bigN;i++)
+    {
+        for (SUPERLONG j = 0; j <= bigN; j++)
+        {
+            if (big.at(i.toUnsignedLongLong()) == small.at(j.toUnsignedLongLong()))
+            {
+                return (i + (j*(bigN + 1)));
+            }
+        }
+    }
+
+
+
+}
 
 NumTheoryFormulas::NumTheoryFormulas()
 {
