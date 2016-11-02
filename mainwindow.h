@@ -18,6 +18,9 @@ public:
 private slots:
     void on_euclidAlg_clicked();
     void on_modExp_clicked();
+    void on_MultInverse_clicked();
+    void on_order_clicked();
+    void on_discreteLog_clicked();
 
 
 private:

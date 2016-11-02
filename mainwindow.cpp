@@ -61,4 +61,28 @@ void MainWindow::on_modExp_clicked()
     ui->mExpOutput->setText(QString::fromStdString((solver.ModExponent(b,e,m)).toString()));
 }
 
+void MainWindow::on_MultInverse_clicked()
+{
+    std::string val = (ui->mInvBase->text()).toStdString();
+    std::string mod = (ui->mInvMod->text()).toStdString();
 
+    ui->mInvOut->setText(QString::fromStdString((solver.MultInvrse(val,mod)).toString()));
+
+}
+
+void MainWindow::on_order_clicked()
+{
+    std::string val = (ui->orderBase->text()).toStdString();
+    std::string mod = (ui->orderMod->text()).toStdString();
+
+    ui->orderOut->setText(QString::fromStdString((solver.order(val,mod)).toString()));
+}
+
+void MainWindow::on_discreteLog_clicked()
+{
+    std::string pRoot = (ui->discreteLogPRoot->text()).toStdString();
+    std::string val = (ui->discreteLogValue->text()).toStdString();
+    std::string mod = (ui->discreteLogMod->text()).toStdString();
+
+    ui->discreteLogOut->setText(QString::fromStdString((solver.discreteLogBruteForce(pRoot,val,mod)).toString());)
+}
