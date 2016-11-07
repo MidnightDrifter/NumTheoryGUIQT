@@ -351,7 +351,7 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::CRT( int numEqns, NumTheoryFormu
         bigM =  bigM* eqns[i][1];
 
     }
-    bM = bigM.toLongLong();
+   // bM = bigM.toLongLong();
     NumTheoryFormulas::SUPERLONG out = 0;
     NumTheoryFormulas::SUPERLONG mTemp;
     for (int i = 0; i < numEqns; i++)
@@ -436,15 +436,20 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::order(NumTheoryFormulas::SUPERLO
         return exitOnFailure(FAILPAIR(-1, false));
     }
 
-    NumTheoryFormulas::SUPERLONG holder, out;
-    for (NumTheoryFormulas::SUPERLONG i = 1; i <= base; i++)
+    NumTheoryFormulas::SUPERLONG out(-1);
+    for (NumTheoryFormulas::SUPERLONG i = 1; i < base; i++)
     {
-        holder = ModExponent(i, 1, base);
-        if (holder == 0 && (out = ModExponent(a,i,base))==0)
-        {
-            return out;
-        }
+        //holder = ModExponent(i, 1, base);
+    //	if (holder == 0)
+    //	{
+            (out = ModExponent(a, i, base));
+            if (out == 1)
+            {
+                return i;
+            }
+    //	}
     }
+    return -1;
 }
 
 

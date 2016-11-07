@@ -313,7 +313,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="order_2">
+   <widget class="QPushButton" name="dLog">
     <property name="geometry">
      <rect>
       <x>340</x>
