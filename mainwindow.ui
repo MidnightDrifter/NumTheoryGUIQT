@@ -503,6 +503,177 @@
      <string>CRT</string>
     </property>
    </widget>
+   <widget class="QTextBrowser" name="crtOut">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>270</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="strongFermatTestMod">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>410</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="strongFermatTestNum">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>370</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="rabinMillerTestRounds">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>100</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="strongFermatTestOut">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>440</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="rabinMillerTestMod">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>180</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="strongFermatTestNum_2">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>140</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="rabinMillerTestOut">
+    <property name="geometry">
+     <rect>
+      <x>950</x>
+      <y>220</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="strongFermatTest">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>340</y>
+      <width>121</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Strong Fermat Test</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rabinMillerTest">
+    <property name="geometry">
+     <rect>
+      <x>970</x>
+      <y>70</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Rabin-Miller Test</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="strongFermatTestModLabel">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>400</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MOD</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="strongFermatTestNumLabel">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>370</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>NUM</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="rabinMillerTestNumLabel">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>140</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>NUM</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="strongFermatTestNumLabel_2">
+    <property name="geometry">
+     <rect>
+      <x>916</x>
+      <y>100</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ROUNDS</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="rabinMillerTestModLabel">
+    <property name="geometry">
+     <rect>
+      <x>920</x>
+      <y>180</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MOD</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
