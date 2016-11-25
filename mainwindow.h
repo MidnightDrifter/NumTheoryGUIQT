@@ -23,6 +23,8 @@ private slots:
     void on_dLog_clicked();
 
 
+    void on_crt_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

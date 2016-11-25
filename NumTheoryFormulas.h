@@ -20,8 +20,15 @@ public:
      std::vector<std::vector<SUPERLONG>> EuclideanAlgorithm(SUPERLONG a, SUPERLONG b);
     //static
         SUPERLONG ModExponent(SUPERLONG base, SUPERLONG exp, SUPERLONG mod);
+        SUPERLONG ModExponentCoef(SUPERLONG coef, SUPERLONG base, SUPERLONG exp, SUPERLONG mod) { SUPERLONG t = ModExponent(base, exp, mod);  SUPERLONG s = ModExponent(coef, 1, mod);    return ModExponent(t*s, 1, mod); }
         SUPERLONG MultInverse(SUPERLONG a, SUPERLONG mod);
      SUPERLONG CRT(int numEquations, SUPERLONG equations[][2]);
+
+
+     std::pair<SUPERLONG, SUPERLONG> encryptElGamo(SUPERLONG msg, SUPERLONG pRoot, SUPERLONG prime, SUPERLONG b, SUPERLONG ab) { return std::pair<SUPERLONG, SUPERLONG>(ModExponent(pRoot, b, prime), ModExponentCoef(msg, pRoot, ab, prime)); }
+     SUPERLONG decryptElGamo(SUPERLONG gA, SUPERLONG gB, SUPERLONG prime, SUPERLONG encryptedMsg) { return (MultInverse(gA*gB, prime))*encryptedMsg; }
+
+
 
      SUPERLONG GCD(SUPERLONG a, SUPERLONG b);
      SUPERLONG decryptionExponent(SUPERLONG exp, SUPERLONG q, SUPERLONG p);
@@ -44,7 +51,7 @@ public:
     // FAILPAIR decrypt(const char* msg, BIG exp, BIG p, BIG q) { return decrypt(SUPERLONG(msg), SUPERLONG(exp), SUPERLONG(p), SUPERLONG(q)); }
 
 
-
+     std::string readFileEncode(const char* filename, const char*outfile);
     // SUPERLONG ModExponent(BIG base, BIG exp, BIG mod) { return ModExponent(SUPERLONG(base), SUPERLONG(exp), SUPERLONG(mod)); }
     // FAILPAIR MultInverse(BIG a, BIG b) { return MultInverse(SUPERLONG(a), SUPERLONG(b)); }
     // SUPERLONG CRT()

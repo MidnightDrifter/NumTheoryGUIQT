@@ -86,3 +86,32 @@ void MainWindow::on_dLog_clicked()
 
     ui->discreteLogOut->setText(QString::fromStdString((solver.discreteLogBruteForce(pRoot,val,mod)).toString()));
 }
+
+void MainWindow::on_crt_clicked()
+{
+    NumTheoryFormulas::SUPERLONG numEqns = (ui->crtNumEqns->text()).toStdString();
+
+    NumTheoryFormulas::SUPERLONG equations[][2];
+    NumTheoryFormulas::SUPERLONG bigM = 1;
+    NumTheoryFormulas::SUPERLONG num, mod;
+
+    std::string s = (ui->crtEqns->text()).toStdString();
+    std::string n,m;
+
+    for(int i=0;i<numEqns.toUnsignedLongLong();i++)
+    {
+        sscanf_s(s,"%s %s",&n, &m);
+        num=n;
+        mod=m;
+        equations[i][0] = num;
+        equations[i][1] = mod;
+        bigM *=mod;
+
+    }
+
+    std::string out = solver.CRT(numEqns.toInt(),equations).toString() + " mod " + bigM.toString();
+
+    ui->crtOut->setText(QString::fromStdString(out));
+
+
+}

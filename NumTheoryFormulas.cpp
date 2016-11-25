@@ -128,10 +128,10 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::ModExponent(NumTheoryFormulas::S
 NumTheoryFormulas::SUPERLONG b = base % mod;
     NumTheoryFormulas::SUPERLONG e = exp;
 
-    long long testE, testB, testM;
-    testE = e.toLongLong();
-    testB = b.toLongLong();
-    testM = mod.toLongLong();
+    //long long testE, testB, testM;
+    //testE = e.toLongLong();
+    //testB = b.toLongLong();
+    //testM = mod.toLongLong();
 
 
     if(mod ==1)// exp ==0)
@@ -150,10 +150,10 @@ NumTheoryFormulas::SUPERLONG b = base % mod;
         {
             //m *= (b%mod);
             m = (m*b)%mod;
-            testM = m.toLongLong();
-            testB = b.toLongLong();
-            testE = e.toLongLong();
-            int qqq = 1;
+            //testM = m.toLongLong();
+        //	testB = b.toLongLong();
+            //testE = e.toLongLong();
+            //int qqq = 1;
 
         }
 
@@ -164,7 +164,7 @@ NumTheoryFormulas::SUPERLONG b = base % mod;
         //b %= mod;
         //b *= (b%mod);
     }
-    long long test = m.toLongLong();
+//	long long test = m.toLongLong();
     return m;
 }
 
@@ -436,7 +436,11 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::order(NumTheoryFormulas::SUPERLO
         return exitOnFailure(FAILPAIR(-1, false));
     }
 
+<<<<<<< HEAD
+    NumTheoryFormulas::SUPERLONG holder, out(-1);
+=======
     NumTheoryFormulas::SUPERLONG out(-1);
+>>>>>>> origin/master
     for (NumTheoryFormulas::SUPERLONG i = 1; i < base; i++)
     {
         //holder = ModExponent(i, 1, base);
@@ -455,14 +459,17 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::order(NumTheoryFormulas::SUPERLO
 
 std::vector<NumTheoryFormulas::SUPERLONG> NumTheoryFormulas::factorize(NumTheoryFormulas::SUPERLONG a)
 {
+    SUPERLONG aCopy = a;
     std::vector<SUPERLONG> out;
     SUPERLONG temp;
-    for (SUPERLONG i = 1; i <= a; i++)
+    for (SUPERLONG i = 2; i <= aCopy; i++)
     {
-        temp = ModExponent(i, 1, a);
+        temp = ModExponent(i, 1, aCopy);
         if (temp == 0)
         {
+            aCopy = aCopy / i;
             out.push_back(i);
+            i = 2;
         }
     }
 
@@ -501,6 +508,7 @@ void NumTheoryFormulas::printFactors(NumTheoryFormulas::SUPERLONG a)
 
 NumTheoryFormulas::SUPERLONG NumTheoryFormulas::discreteLogBruteForce(NumTheoryFormulas::SUPERLONG pRoot, NumTheoryFormulas::SUPERLONG val, NumTheoryFormulas::SUPERLONG mod)
 {
+
     SUPERLONG out = -1;
     for (SUPERLONG i = 1; i <= mod; i++)
     {
@@ -536,19 +544,84 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::discreteLogBabyStepGiantStep(Num
         small.push_back(ModExponent(pRoot, i, mod));
     }
 
-    for(SUPERLONG i=0;i<=bigN;i++)
+for(auto i = big.begin(); i!=big.end();i++)
+{
+    for (auto j = small.begin(); j != small.end(); j++)
     {
-        for (SUPERLONG j = 0; j <= bigN; j++)
+        if((*i) == (*j))
         {
-            if (big.at(i.toUnsignedLongLong()) == small.at(j.toUnsignedLongLong()))
-            {
-                return (i + (j*(bigN + 1)));
-            }
+            return (*i) + (bigN + 1)*(*j);
         }
     }
+}
 
 
 
+}
+
+
+std::string NumTheoryFormulas::readFileEncode(const char* filename, const char* outfile)
+{
+    FILE* fp;
+    std::string out;
+    fp=fopen(filename, "rb");
+    if (fp)
+    {
+    //read in 4 bytes, char guaranteed to be 1 byte
+    //char* input= new char[4];
+        char input[8];
+        unsigned long long uInt, uHolder;
+        int size = sizeof(char) * 8;
+        int uSize = sizeof(unsigned int) * 8;
+    SUPERLONG encryptedText = 0;
+    SUPERLONG e( "101003231309");
+    SUPERLONG p("665728583607974639");
+    SUPERLONG q("3405292598950135985681");
+    int offset = (fseek(fp, 0, SEEK_END)) % 4;
+    out += offset;
+    out += "\n";
+    rewind(fp);
+    int charsRead = -1;
+    //unsigned long long test;
+
+
+        while (feof(fp)==0 && ferror(fp)==0 && charsRead!=0)
+        {
+            charsRead = 0;
+            memset(input, 0, size);
+            uInt &= 0;
+            charsRead = fread(input, sizeof(char), 8,fp);
+            if (charsRead>0)
+            {
+                //test = input;
+                for (int i = 0; i < 8; i++)
+                {
+                    uHolder &= 0;
+                    uHolder = input[i];
+                    uHolder <<= 8 * (7 - i);
+                    uInt += uHolder;
+                }
+
+
+                encryptedText = uInt;
+                //test = encryptedText.toLongLong();
+                out += encrypt(encryptedText, e, p, q).toString() + "\n";
+            }
+            }
+
+    }
+    else
+    {
+        std::cout << "Error opening file." << std::endl;
+
+    }
+
+    std::ofstream o(outfile, std::ofstream::out);
+    o << out;
+
+
+
+    return out;
 }
 
 NumTheoryFormulas::NumTheoryFormulas()
