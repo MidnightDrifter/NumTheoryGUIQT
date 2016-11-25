@@ -115,3 +115,40 @@ void MainWindow::on_crt_clicked()
 
 
 }
+
+void MainWindow::on_strongFermatTest_clicked()
+{
+    std::string number = (ui->strongFermatTestNum->text()).toStdString();
+    std::string mod = (ui->strongFermatTestMod->text()).toStdString();
+
+    std::string out;
+    if(1==solver.strongFermatTest(number,mod))
+    {
+        string = "Probable prime.\n";
+    }
+
+    else
+    {
+        "Composite.\n";
+    }
+
+    ui->crtOut->setText(QString::fromStdString(out));
+}
+
+void MainWindow::on_rabinMillerTest_clicked()
+{
+
+    std::string mod = (ui->rabinMillerTestMod->text()).toStdString();
+      NumTheoryFormulas::SUPERLONG rounds = (ui->rabinMillerTestRounds->text()).toStdString();
+    std::string out;
+    if(1==solver.millerRabinTest(rounds,mod))
+    {
+        out = "Probable prime after " + rounds.toUnsignedLongLong() + " rounds.\n";
+    }
+    else
+    {
+        out = "Composite.\n";
+    }
+
+    ui->rabinMillerTestOut->setText(QString::fromStdString(out));
+}

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <InfInt.h>
 #include <fstream>
@@ -47,6 +48,15 @@ public:
      SUPERLONG discreteLogBruteForce(SUPERLONG pRoot, SUPERLONG val, SUPERLONG mod);
 
      SUPERLONG discreteLogBabyStepGiantStep(SUPERLONG pRoot, SUPERLONG val, SUPERLONG mod);
+     int strongFermatTest(SUPERLONG num, SUPERLONG base);
+     int weakFermatTest(SUPERLONG num, SUPERLONG base);
+     int millerRabinTest(SUPERLONG num,  SUPERLONG numTests);
+
+
+     SUPERLONG fermatFactorization(SUPERLONG num);
+
+
+
     //SUPERLONG encrypt(const char* msg, BIG exp, BIG p, BIG q) { return encrypt(SUPERLONG(msg), SUPERLONG(exp), SUPERLONG(p), SUPERLONG(q)); }
     // FAILPAIR decrypt(const char* msg, BIG exp, BIG p, BIG q) { return decrypt(SUPERLONG(msg), SUPERLONG(exp), SUPERLONG(p), SUPERLONG(q)); }
 
@@ -54,7 +64,7 @@ public:
      std::string readFileEncode(const char* filename, const char*outfile);
     // SUPERLONG ModExponent(BIG base, BIG exp, BIG mod) { return ModExponent(SUPERLONG(base), SUPERLONG(exp), SUPERLONG(mod)); }
     // FAILPAIR MultInverse(BIG a, BIG b) { return MultInverse(SUPERLONG(a), SUPERLONG(b)); }
-    // SUPERLONG CRT()
+    //// SUPERLONG CRT()
     // SUPERLONG GCD(BIG a, BIG b) {return GCD(SUPERLONG(a), SUPERLONG(b)); }
     //
 

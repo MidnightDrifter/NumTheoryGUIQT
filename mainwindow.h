@@ -25,6 +25,10 @@ private slots:
 
     void on_crt_clicked();
 
+    void on_strongFermatTest_clicked();
+
+    void on_rabinMillerTest_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

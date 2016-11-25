@@ -557,18 +557,8 @@
     <property name="geometry">
      <rect>
       <x>990</x>
-      <y>180</y>
-      <width>111</width>
-      <height>20</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="strongFermatTestNum_2">
-    <property name="geometry">
-     <rect>
-      <x>990</x>
       <y>140</y>
-      <width>113</width>
+      <width>111</width>
       <height>20</height>
      </rect>
     </property>
@@ -577,7 +567,7 @@
     <property name="geometry">
      <rect>
       <x>950</x>
-      <y>220</y>
+      <y>180</y>
       <width>201</width>
       <height>31</height>
      </rect>
@@ -635,19 +625,6 @@
      <string>NUM</string>
     </property>
    </widget>
-   <widget class="QLabel" name="rabinMillerTestNumLabel">
-    <property name="geometry">
-     <rect>
-      <x>920</x>
-      <y>140</y>
-      <width>47</width>
-      <height>13</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>NUM</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="strongFermatTestNumLabel_2">
     <property name="geometry">
      <rect>
@@ -665,7 +642,7 @@
     <property name="geometry">
      <rect>
       <x>920</x>
-      <y>180</y>
+      <y>140</y>
       <width>47</width>
       <height>13</height>
      </rect>

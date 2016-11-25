@@ -351,7 +351,7 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::CRT( int numEqns, NumTheoryFormu
         bigM =  bigM* eqns[i][1];
 
     }
-   // bM = bigM.toLongLong();
+    bM = bigM.toLongLong();
     NumTheoryFormulas::SUPERLONG out = 0;
     NumTheoryFormulas::SUPERLONG mTemp;
     for (int i = 0; i < numEqns; i++)
@@ -436,11 +436,7 @@ NumTheoryFormulas::SUPERLONG NumTheoryFormulas::order(NumTheoryFormulas::SUPERLO
         return exitOnFailure(FAILPAIR(-1, false));
     }
 
-<<<<<<< HEAD
     NumTheoryFormulas::SUPERLONG holder, out(-1);
-=======
-    NumTheoryFormulas::SUPERLONG out(-1);
->>>>>>> origin/master
     for (NumTheoryFormulas::SUPERLONG i = 1; i < base; i++)
     {
         //holder = ModExponent(i, 1, base);
@@ -561,7 +557,7 @@ for(auto i = big.begin(); i!=big.end();i++)
 
 
 std::string NumTheoryFormulas::readFileEncode(const char* filename, const char* outfile)
-{
+{/*
     FILE* fp;
     std::string out;
     fp=fopen(filename, "rb");
@@ -622,6 +618,151 @@ std::string NumTheoryFormulas::readFileEncode(const char* filename, const char* 
 
 
     return out;
+    */
+
+    FILE* fp;
+    std::string out;
+    fp = fopen(filename, "rb");
+    char numPaddedBytes = '0';
+    if (NULL != fp)
+    {
+
+
+            int readbytes = 8;
+        int padbytes = 0;
+        std::list<std::string> output;
+        std::string padding;
+
+        while (readbytes == 8)
+        {
+            unsigned long long number = 0;
+            int readbytes = fread(&number, sizeof(char), 8, fp); // read 8 bytes from file
+            if (readbytes != 8)
+                padbytes = 8 - readbytes;
+
+            NumTheoryFormulas::SUPERLONG BigNumber(number);
+            SUPERLONG e("101003231309");
+            SUPERLONG p("665728583607974639");
+            SUPERLONG q("3405292598950135985681");
+            SUPERLONG toWrite = encrypt(BigNumber, e, p, q);
+            output.push_back(toWrite.toString());
+            output.push_back("\n");
+
+        }
+        if (padbytes > 0)
+        {
+            for (int i = 0; i < padbytes; i++)
+            {
+                padding+= "00000000";
+                numPaddedBytes++;
+            }
+            output.push_front(padding);
+            output.push_front("\n");
+            output.push_front(&numPaddedBytes);
+
+        }
+        //output.push_front(IntToString(padbytes));
+        std::ofstream o(outfile, std::ofstream::out);
+        o << out;
+        }
+    return out;
+
+}
+
+int NumTheoryFormulas::strongFermatTest(NumTheoryFormulas::SUPERLONG num, NumTheoryFormulas::SUPERLONG base)
+{
+    SUPERLONG n = num - 1;
+    SUPERLONG N = num-1;
+    SUPERLONG k = 0;
+    SUPERLONG m = 0;
+    SUPERLONG exponent = 1;
+
+    while (n%2 == 0)
+    {
+        n = n / 2;
+        k++;
+    }
+
+
+    exponent = n;
+    //int testK = k.toInt();
+    //int testM = exponent.toInt();
+    if (ModExponent(base, exponent, num) == 1 || ModExponent(base, exponent, num) == (N))
+    {
+        return 1;
+    }
+
+    else
+    {
+        for (SUPERLONG i = 1; i < k; i++)
+        {
+            exponent = exponent * 2;
+            if (ModExponent(base, exponent, num) == N)
+            {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
+
+}
+
+int NumTheoryFormulas::weakFermatTest(NumTheoryFormulas::SUPERLONG num, NumTheoryFormulas::SUPERLONG base)
+{
+    if (ModExponent(base, num - 1, num) == 1)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+NumTheoryFormulas::SUPERLONG NumTheoryFormulas::fermatFactorization(NumTheoryFormulas::SUPERLONG num)
+{
+    SUPERLONG startX = num.intSqrt()+1;  //This should return the FLOOR of the square root, so add 1
+
+    SUPERLONG y = ((startX*startX) - num).intSqrt();
+
+    while ((startX * startX) - (y * y) != num)
+    {
+        startX += 1;
+        y = ((startX*startX) - num).intSqrt();
+    }
+
+    return startX;
+
+}
+
+
+int NumTheoryFormulas::millerRabinTest(NumTheoryFormulas::SUPERLONG num, NumTheoryFormulas::SUPERLONG numTests)
+{
+    std::vector<SUPERLONG> testBases(numTests.toUnsignedLongLong());
+    SUPERLONG temp =InfInt(rand()) % (num - 4) + 2;
+    while (testBases.size() < numTests.toUnsignedLongLong())
+    {
+        for (int i = 0; i < testBases.size(); i++)
+        {
+            if (temp == testBases[i])
+            {
+                temp = InfInt(rand()) % (num - 4) + 2;
+                i = 0;
+            }
+        }
+
+        testBases.push_back(temp);
+    }
+
+
+    for (int i = 0; i < testBases.size(); i++)
+    {
+        if (strongFermatTest(num, testBases[i]) == 0)
+        {
+            return 0;
+        }
+    }
+    return 1;
+
 }
 
 NumTheoryFormulas::NumTheoryFormulas()
